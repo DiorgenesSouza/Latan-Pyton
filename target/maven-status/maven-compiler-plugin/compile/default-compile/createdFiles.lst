@@ -1,0 +1,8 @@
+com\projetolatan\entity\VooLATAM.class
+com\projetolatan\dto\BuscarVoosRequest.class
+com\projetolatan\MonitorPrecosLatamApplication.class
+com\projetolatan\service\ScraperService$1.class
+com\projetolatan\service\ScraperService.class
+com\projetolatan\service\VooExcelService.class
+com\projetolatan\controller\VooController.class
+com\projetolatan\repository\VooLATAMRepository.class

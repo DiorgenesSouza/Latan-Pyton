@@ -1,0 +1,83 @@
+<main class="page">
+  <section class="panel">
+    <div class="header">
+      <div>
+        <p class="eyebrow">Monitor LATAM</p>
+        <h1>Busca de voos</h1>
+      </div>
+
+      <button class="secondary" type="button" (click)="exportarExcel()" [disabled]="exportando">
+        {{ exportando ? 'Exportando...' : 'Exportar para Excel' }}
+      </button>
+    </div>
+
+    <form class="search-form" (ngSubmit)="buscarVoos()">
+      <label>
+        Origem
+        <input
+          name="origem"
+          [(ngModel)]="origem"
+          maxlength="3"
+          required
+          placeholder="GRU"
+          autocomplete="off"
+        >
+      </label>
+
+      <label>
+        Destino
+        <input
+          name="destino"
+          [(ngModel)]="destino"
+          maxlength="3"
+          required
+          placeholder="SDU"
+          autocomplete="off"
+        >
+      </label>
+
+      <label>
+        Data
+        <input name="data" [(ngModel)]="data" type="date" required>
+      </label>
+
+      <button class="primary" type="submit" [disabled]="carregando">
+        {{ carregando ? 'Buscando...' : 'Buscar Voos' }}
+      </button>
+    </form>
+
+    <div class="loading" *ngIf="carregando">
+      <span class="spinner"></span>
+      Consultando a LATAM. Isto pode demorar alguns segundos.
+    </div>
+
+    <p class="error" *ngIf="erro">{{ erro }}</p>
+
+    <div class="table-wrap" *ngIf="voos.length > 0">
+      <table>
+        <thead>
+          <tr>
+            <th>Rota</th>
+            <th>Data</th>
+            <th>Horario</th>
+            <th>Duracao</th>
+            <th>Preco</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let voo of voos">
+            <td>{{ voo.origem }} -> {{ voo.destino }}</td>
+            <td>{{ voo.dataVoo | date: 'dd/MM/yyyy' }}</td>
+            <td>{{ voo.horarioPartida }} - {{ voo.horarioChegada }}</td>
+            <td>{{ voo.duracao || '-' }}</td>
+            <td>R$ {{ voo.preco | number: '1.2-2' }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="empty" *ngIf="!carregando && voos.length === 0">
+      Nenhum voo carregado ainda.
+    </p>
+  </section>
+</main>
